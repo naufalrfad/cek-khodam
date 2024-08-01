@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return hash;
     }
 
-    cekKhodamButton.addEventListener('click', () => {
+    function showKhodam() {
         const nama = namaInput.value.trim();
         if (nama !== '') {
             const hash = getHash(nama);
@@ -49,6 +49,14 @@ document.addEventListener('DOMContentLoaded', () => {
             halamanInti.classList.add('active');
         } else {
             alert('Mohon isi nama anda.');
+        }
+    }
+
+    cekKhodamButton.addEventListener('click', showKhodam);
+
+    namaInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            showKhodam();
         }
     });
 

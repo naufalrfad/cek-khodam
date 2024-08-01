@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "Kentang", "Kopi sachet", "Odading", "Nasi kucing", "Sate taichan", 
         "Seblak", "Nugget Geprek", "Cilok", "Cimol", "Cireng", "Cilor", "Boba", "Es kepal milo", 
         "Indomie cabe ijo", "Mie gelas", "Bakso beranak", "Keripik kaca", "Tahu bulat",
-        "Tukang parkir", "Makassar", "Bekasi", "Angkot", "Cincau", "Micin", "Jempol kaki", "Kucing oren",
+        "Tukang parkir", "Angkot", "Cincau", "Micin", "Jempol kaki", "Kucing oren",
         "Motor butut", "Sarung bantal", "Sapu lidi", "Panci gosong", "Gelas retak", "Sendok bengkok",
         "Kipas angin", "Kulkas dua pintu", "Kulkas satu pintu", "Jemuran", "Piring kaleng", "Keranjang baju",
         "Ember bocor", "Gayung bolong", "Karet gelang", "Masker kain", "Tisu gulung", 
@@ -28,10 +28,22 @@ document.addEventListener('DOMContentLoaded', () => {
         "Baterai kering", "Tutup panci"
     ];
 
+    function getHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash |= 0; // Convert to 32bit integer
+        }
+        return hash;
+    }
+
     cekKhodamButton.addEventListener('click', () => {
         const nama = namaInput.value.trim();
         if (nama !== '') {
-            const khodam = khodamList[Math.floor(Math.random() * khodamList.length)];
+            const hash = getHash(nama);
+            const khodamIndex = Math.abs(hash) % khodamList.length;
+            const khodam = khodamList[khodamIndex];
             khodamResult.textContent = khodam;
             halamanAwal.classList.remove('active');
             halamanInti.classList.add('active');
